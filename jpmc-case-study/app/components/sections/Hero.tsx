@@ -30,7 +30,7 @@ export default function Hero() {
           JPMC Design System
         </motion.h1>
         <motion.p
-          className="text-xl sm:text-2xl md:text-3xl text-black/70 mb-4 font-medium"
+          className="text-xl sm:text-2xl md:text-3xl text-black/70 mb-4 font-semibold"
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}

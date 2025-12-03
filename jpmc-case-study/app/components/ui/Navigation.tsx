@@ -78,7 +78,7 @@ export default function Navigation() {
                   <motion.a
                     href={item.href}
                     onClick={(e) => handleClick(e, item.href)}
-                    className={`text-sm font-medium transition-colors relative ${
+                    className={`text-sm font-semibold transition-colors relative ${
                       isActive ? "text-black" : "text-black/60"
                     }`}
                     whileHover={{ scale: 1.1 }}
