@@ -33,7 +33,17 @@ export default function CustomCursor() {
       setIsVisible(true);
     };
 
+    let lastCheckTime = 0;
+    const debounceDelay = 50; // Check every 50ms to avoid too many checks
+    
     const handleMouseMove = (e: MouseEvent) => {
+      const now = Date.now();
+      // Debounce the checks to avoid constant re-evaluation
+      if (now - lastCheckTime < debounceDelay) {
+        return;
+      }
+      lastCheckTime = now;
+      
       const target = e.target as HTMLElement;
       const isOverLink = target.tagName === "A" || target.closest("a");
       const isOverImage = target.tagName === "IMG" || target.closest("img");
@@ -55,14 +65,28 @@ export default function CustomCursor() {
         setCursorState("image");
         currentStateRef.current = "image";
       } else {
-        // When not over link/image, immediately switch to default
-        // (removed delay to prevent stuck state)
-        if (exitTimeoutRef.current) {
-          clearTimeout(exitTimeoutRef.current);
-          exitTimeoutRef.current = null;
+        // When not over link/image, delay switching to default by 1 second
+        if (currentStateRef.current === "link" || currentStateRef.current === "image") {
+          // Only start timer if one isn't already running
+          if (!exitTimeoutRef.current) {
+            exitTimeoutRef.current = setTimeout(() => {
+              // Double-check we're still not over a link/image
+              const currentTarget = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement;
+              const stillOverLink = currentTarget?.tagName === "A" || currentTarget?.closest("a");
+              const stillOverImage = currentTarget?.tagName === "IMG" || currentTarget?.closest("img");
+              
+              if (!stillOverLink && !stillOverImage) {
+                setCursorState("default");
+                currentStateRef.current = "default";
+              }
+              exitTimeoutRef.current = null;
+            }, 1000);
+          }
+        } else {
+          // If already default, set immediately
+          setCursorState("default");
+          currentStateRef.current = "default";
         }
-        setCursorState("default");
-        currentStateRef.current = "default";
       }
     };
 
