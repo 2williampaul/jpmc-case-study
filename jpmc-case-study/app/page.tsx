@@ -22,6 +22,6 @@ export default function Home() {
       <Solution />
       <Problem />
       <Learnings />
-    </main>
+      </main>
   );
 }
