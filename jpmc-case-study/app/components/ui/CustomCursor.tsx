@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 export default function CustomCursor() {
   const [cursorState, setCursorState] = useState<"default" | "link" | "image">("default");
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const exitTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -32,6 +33,12 @@ export default function CustomCursor() {
     };
 
     const handleMouseEnter = (e: MouseEvent) => {
+      // Clear any pending exit timeout
+      if (exitTimeoutRef.current) {
+        clearTimeout(exitTimeoutRef.current);
+        exitTimeoutRef.current = null;
+      }
+      
       const target = e.target as HTMLElement;
       if (target.tagName === "A" || target.closest("a")) {
         setCursorState("link");
@@ -43,7 +50,15 @@ export default function CustomCursor() {
     };
 
     const handleMouseLeave = () => {
-      setCursorState("default");
+      // Delay the state change by 1 second to prevent flickering when moving between menu items
+      if (exitTimeoutRef.current) {
+        clearTimeout(exitTimeoutRef.current);
+      }
+      
+      exitTimeoutRef.current = setTimeout(() => {
+        setCursorState("default");
+        exitTimeoutRef.current = null;
+      }, 1000);
     };
 
     window.addEventListener("mousemove", moveCursor);
@@ -54,6 +69,10 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mousemove", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      // Clear timeout on cleanup
+      if (exitTimeoutRef.current) {
+        clearTimeout(exitTimeoutRef.current);
+      }
     };
   }, [cursorX, cursorY]);
 
