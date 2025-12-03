@@ -3,37 +3,26 @@
 export default function Logo() {
   return (
     <div className="flex items-center">
-      <span className="text-xl font-bold text-black relative">
-        Billy Pau
+      <span className="text-xl font-bold text-black uppercase tracking-tight relative">
+        BILLY PA
         <span className="relative inline-block">
-          l
-          {/* Circle positioned above and to the right of the "l" */}
+          U
+          {/* Graphic element positioned above the "UL" - quarter circle shape */}
           <svg
             width="16"
-            height="16"
-            viewBox="0 0 24 24"
+            height="10"
+            viewBox="0 0 16 10"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="absolute -top-2 right-0 text-black"
-            style={{ transform: "translateX(2px)" }}
+            className="absolute -top-2.5 left-0 text-black"
           >
-            {/* 3/4 circle with right-angled corner cut out */}
+            {/* Quarter-circle shape: curved edge on top-right, straight edges forming right angle pointing down-left */}
             <path
-              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z"
+              d="M0 10 L0 0 L8 0 A8 8 0 0 1 8 8 L0 10 Z"
               fill="currentColor"
             />
-            {/* Inner circle to create ring */}
-            <circle cx="12" cy="12" r="8" fill="white" />
-            {/* Right-angled corner cut out (top-right quadrant) */}
-            <rect x="12" y="2" width="10" height="10" fill="white" />
-            {/* Visible 3/4 arc - redraw the outer arc */}
-            <path
-              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22"
-              stroke="currentColor"
-              strokeWidth="2"
-              fill="none"
-            />
           </svg>
+          L
         </span>
       </span>
     </div>
