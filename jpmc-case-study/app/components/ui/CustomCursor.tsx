@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 
 export default function CustomCursor() {
   const [cursorState, setCursorState] = useState<"default" | "link" | "image">("default");
@@ -10,11 +10,6 @@ export default function CustomCursor() {
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-
-  // Use very high stiffness and low damping for immediate, direct tracking
-  const springConfig = { damping: 15, stiffness: 3000 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     // Detect if device is mobile/touch device
@@ -71,8 +66,8 @@ export default function CustomCursor() {
     <motion.div
       className="fixed top-0 left-0 pointer-events-none z-50 mix-blend-difference"
       style={{
-        x: cursorXSpring,
-        y: cursorYSpring,
+        x: cursorX,
+        y: cursorY,
         translateX: "-50%",
         translateY: "-50%",
       }}
