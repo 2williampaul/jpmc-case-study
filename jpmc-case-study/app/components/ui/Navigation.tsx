@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Logo from "./Logo";
 
 const navItems = [
   { name: "Hero", href: "#hero" },
@@ -62,11 +63,10 @@ export default function Navigation() {
           <motion.a
             href="#hero"
             onClick={(e) => handleClick(e, "#hero")}
-            className="text-xl font-bold text-black"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            JPMC Design System
+            <Logo />
           </motion.a>
 
           <ul className="hidden md:flex items-center gap-6 lg:gap-8">
