@@ -50,7 +50,7 @@ export default function CustomCursor() {
     };
 
     const handleMouseLeave = () => {
-      // Delay the state change by 1 second to prevent flickering when moving between menu items
+      // Delay the state change by 2 seconds to prevent flickering when moving between menu items
       if (exitTimeoutRef.current) {
         clearTimeout(exitTimeoutRef.current);
       }
@@ -58,7 +58,7 @@ export default function CustomCursor() {
       exitTimeoutRef.current = setTimeout(() => {
         setCursorState("default");
         exitTimeoutRef.current = null;
-      }, 1000);
+      }, 2000);
     };
 
     window.addEventListener("mousemove", moveCursor);
