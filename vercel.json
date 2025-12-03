@@ -1,8 +1,8 @@
 {
-  "buildCommand": "cd jpmc-case-study && npm install && npm run build",
+  "buildCommand": "cd jpmc-case-study && npm ci && npm run build",
   "outputDirectory": "jpmc-case-study/.next",
-  "installCommand": "cd jpmc-case-study && npm install",
+  "installCommand": "cd jpmc-case-study && npm ci",
   "devCommand": "cd jpmc-case-study && npm run dev",
-  "framework": null
+  "framework": "nextjs"
 }
 
