@@ -34,36 +34,35 @@ export default function CustomCursor() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Clear any pending exit timeout when mouse moves
-      if (exitTimeoutRef.current) {
-        clearTimeout(exitTimeoutRef.current);
-        exitTimeoutRef.current = null;
-      }
-      
       const target = e.target as HTMLElement;
       const isOverLink = target.tagName === "A" || target.closest("a");
       const isOverImage = target.tagName === "IMG" || target.closest("img");
       
       if (isOverLink) {
+        // Clear any pending exit timeout when entering a link
+        if (exitTimeoutRef.current) {
+          clearTimeout(exitTimeoutRef.current);
+          exitTimeoutRef.current = null;
+        }
         setCursorState("link");
         currentStateRef.current = "link";
       } else if (isOverImage) {
+        // Clear any pending exit timeout when entering an image
+        if (exitTimeoutRef.current) {
+          clearTimeout(exitTimeoutRef.current);
+          exitTimeoutRef.current = null;
+        }
         setCursorState("image");
         currentStateRef.current = "image";
       } else {
-        // Only delay if we're transitioning from link/image to default
-        if (currentStateRef.current === "link" || currentStateRef.current === "image") {
-          // Start the delay timer
-          exitTimeoutRef.current = setTimeout(() => {
-            setCursorState("default");
-            currentStateRef.current = "default";
-            exitTimeoutRef.current = null;
-          }, 1000);
-        } else {
-          // If already default, set immediately
-          setCursorState("default");
-          currentStateRef.current = "default";
+        // When not over link/image, immediately switch to default
+        // (removed delay to prevent stuck state)
+        if (exitTimeoutRef.current) {
+          clearTimeout(exitTimeoutRef.current);
+          exitTimeoutRef.current = null;
         }
+        setCursorState("default");
+        currentStateRef.current = "default";
       }
     };
 
