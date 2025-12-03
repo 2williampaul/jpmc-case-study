@@ -58,7 +58,7 @@ export default function CustomCursor() {
             setCursorState("default");
             currentStateRef.current = "default";
             exitTimeoutRef.current = null;
-          }, 2000);
+          }, 1000);
         } else {
           // If already default, set immediately
           setCursorState("default");
