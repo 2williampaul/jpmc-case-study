@@ -80,7 +80,8 @@ export default function CustomCursor() {
     >
       {cursorState === "default" && (
         <motion.div
-          className="w-4 h-4 rounded-full bg-white"
+          className="w-3 h-3 rounded-full bg-white"
+          style={{ width: "12px", height: "12px" }}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
