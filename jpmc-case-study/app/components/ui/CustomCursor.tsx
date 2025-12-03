@@ -8,6 +8,7 @@ export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const exitTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const currentStateRef = useRef<"default" | "link" | "image">("default");
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -32,43 +33,46 @@ export default function CustomCursor() {
       setIsVisible(true);
     };
 
-    const handleMouseEnter = (e: MouseEvent) => {
-      // Clear any pending exit timeout
+    const handleMouseMove = (e: MouseEvent) => {
+      // Clear any pending exit timeout when mouse moves
       if (exitTimeoutRef.current) {
         clearTimeout(exitTimeoutRef.current);
         exitTimeoutRef.current = null;
       }
       
       const target = e.target as HTMLElement;
-      if (target.tagName === "A" || target.closest("a")) {
-        setCursorState("link");
-      } else if (target.tagName === "IMG" || target.closest("img")) {
-        setCursorState("image");
-      } else {
-        setCursorState("default");
-      }
-    };
-
-    const handleMouseLeave = () => {
-      // Delay the state change by 2 seconds to prevent flickering when moving between menu items
-      if (exitTimeoutRef.current) {
-        clearTimeout(exitTimeoutRef.current);
-      }
+      const isOverLink = target.tagName === "A" || target.closest("a");
+      const isOverImage = target.tagName === "IMG" || target.closest("img");
       
-      exitTimeoutRef.current = setTimeout(() => {
-        setCursorState("default");
-        exitTimeoutRef.current = null;
-      }, 2000);
+      if (isOverLink) {
+        setCursorState("link");
+        currentStateRef.current = "link";
+      } else if (isOverImage) {
+        setCursorState("image");
+        currentStateRef.current = "image";
+      } else {
+        // Only delay if we're transitioning from link/image to default
+        if (currentStateRef.current === "link" || currentStateRef.current === "image") {
+          // Start the delay timer
+          exitTimeoutRef.current = setTimeout(() => {
+            setCursorState("default");
+            currentStateRef.current = "default";
+            exitTimeoutRef.current = null;
+          }, 2000);
+        } else {
+          // If already default, set immediately
+          setCursorState("default");
+          currentStateRef.current = "default";
+        }
+      }
     };
 
     window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mousemove", handleMouseEnter);
-    document.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
-      window.removeEventListener("mousemove", handleMouseEnter);
-      document.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("mousemove", handleMouseMove);
       // Clear timeout on cleanup
       if (exitTimeoutRef.current) {
         clearTimeout(exitTimeoutRef.current);
