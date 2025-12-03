@@ -110,10 +110,11 @@ export default function CustomCursor() {
           )}
           {cursorState === "link" && (
             <motion.div
+              key="link"
               className="relative text-white"
               initial={{ scale: 1, rotate: 0 }}
               animate={{
-                scale: [1, 1.2, 1.15, 1.2],
+                scale: 1.2,
                 rotate: 180,
               }}
               transition={{
