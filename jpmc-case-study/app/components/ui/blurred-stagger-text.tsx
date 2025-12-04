@@ -1,6 +1,6 @@
-"use client" 
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import { motion } from "framer-motion";
 
 interface BlurredStaggerProps {
@@ -54,16 +54,22 @@ export const BlurredStagger = ({
         animate="show"
         className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-[120%] text-center break-words inline"
       >
-        {headingText.split("").map((char, index) => (
-          <motion.span
-            key={index}
-            variants={letterAnimation}
-            transition={{ duration: 0.3 }}
-            className="inline-block"
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
+        {headingText.split("").map((char, index) => {
+          // Handle desktop-only line break marker (|)
+          if (char === "|") {
+            return <br key={index} className="hidden md:block" />;
+          }
+          return (
+            <motion.span
+              key={index}
+              variants={letterAnimation}
+              transition={{ duration: 0.3 }}
+              className="inline-block"
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          );
+        })}
         {emoji && (
           <motion.span
             variants={emojiAnimation}

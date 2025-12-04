@@ -99,7 +99,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 		scene.add(points);
 
 		let count = 0;
-		let animationId: number;
+		let animationId: number = 0;
 		let scrollOffset = 0;
 
 		// Handle scroll for parallax effect
@@ -158,10 +158,10 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 		// Initial scroll calculation
 		handleScroll();
 
-		// Start animation
+		// Start animation (this assigns animationId)
 		animate();
 
-		// Store references
+		// Store references (animationId is now assigned from animate())
 		sceneRef.current = {
 			scene,
 			camera,

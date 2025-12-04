@@ -1,6 +1,6 @@
-"use client" 
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import { motion, MotionConfig, HTMLMotionProps } from "framer-motion"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
@@ -47,8 +47,8 @@ function useHoverSliderContext() {
 }
 
 export const HoverSlider = React.forwardRef<
-  HTMLElement,
-  React.HTMLAttributes<HTMLElement> & HoverSliderProps
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & HoverSliderProps
 >(({ children, className, ...props }, ref) => {
   const [activeSlide, setActiveSlide] = React.useState<number>(0)
 
@@ -59,7 +59,7 @@ export const HoverSlider = React.forwardRef<
 
   return (
     <HoverSliderContext.Provider value={{ activeSlide, changeSlide }}>
-      <div className={className}>{children}</div>
+      <div ref={ref} className={cn(className)} {...props}>{children}</div>
     </HoverSliderContext.Provider>
   )
 })
@@ -72,7 +72,8 @@ const WordStaggerHover = React.forwardRef<
 >(({ children, className, ...props }, ref) => {
   return (
     <span
-      className={cn("relative inline-block origin-bottom overflow-hidden")}
+      ref={ref}
+      className={cn("relative inline-block origin-bottom overflow-hidden", className)}
       {...props}
     >
       {children}
@@ -83,8 +84,8 @@ const WordStaggerHover = React.forwardRef<
 WordStaggerHover.displayName = "WordStaggerHover"
 
 export const TextStaggerHover = React.forwardRef<
-  HTMLElement,
-  React.HTMLAttributes<HTMLElement> & TextStaggerHoverProps
+  HTMLSpanElement,
+  React.HTMLAttributes<HTMLSpanElement> & TextStaggerHoverProps
 >(({ text, index, children, className, ...props }, ref) => {
   const { activeSlide, changeSlide } = useHoverSliderContext()
 
@@ -101,7 +102,7 @@ export const TextStaggerHover = React.forwardRef<
         className
       )}
       {...props}
-      ref={ref as any}
+      ref={ref}
       onMouseEnter={handleMouse}
     >
       {characters.map((char, charIndex) => (
@@ -168,17 +169,19 @@ export const HoverSliderImageWrap = React.forwardRef<
 HoverSliderImageWrap.displayName = "HoverSliderImageWrap"
 
 export const HoverSliderImage = React.forwardRef<
-  HTMLImageElement,
-  HTMLMotionProps<"img"> & HoverSliderImageProps
+  HTMLDivElement,
+  HTMLMotionProps<"div"> & HoverSliderImageProps
 >(({ index, imageUrl, logoText, children, className, ...props }, ref) => {
   const { activeSlide } = useHoverSliderContext()
 
   return (
     <motion.div
+      ref={ref}
       className={cn("relative size-full", className)}
       transition={{ ease: [0.33, 1, 0.68, 1], duration: 0.8 }}
       variants={clipPathVariants}
       animate={activeSlide === index ? "visible" : "hidden"}
+      {...props}
     >
       <Image
         src={imageUrl}

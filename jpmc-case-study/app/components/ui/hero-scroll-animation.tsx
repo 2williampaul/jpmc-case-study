@@ -1,11 +1,12 @@
 'use client';
 
 import { useScroll, useTransform, motion, MotionValue } from 'framer-motion';
-import React, { useRef, forwardRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
 import { HoverSlider, HoverSliderImage, HoverSliderImageWrap, TextStaggerHover } from './animated-slideshow';
 import { BlurredStagger } from './blurred-stagger-text';
 import { WarpedGridBackground } from './warped-grid-background';
+import { LogoCarousel } from './logo-carousel';
 
 interface SectionProps {
   scrollYProgress: MotionValue<number>;
@@ -17,7 +18,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   return (
     <motion.section
       style={{ scale, rotate }}
-      className='sticky font-semibold top-0 h-screen bg-gradient-to-t to-[#f0f0f0] from-[#f5f5f5] flex flex-col items-center justify-center text-black'
+      className='sticky font-semibold top-0 h-screen bg-white flex flex-col items-center justify-center text-black'
     >
       <WarpedGridBackground />
 
@@ -37,7 +38,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
         {/* Headline with blurred stagger effect */}
         <div className="max-w-4xl mx-auto px-4 text-center">
           <BlurredStagger 
-            text="Billy Paul is a Design System Designer with a blend of strategy, experience and vibes" 
+            text="Billy Paul is a Design System Designer|with a blend of strategy, craft and vibes" 
             emoji={
               <picture>
                 <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/26a1/512.webp" type="image/webp" />
@@ -51,6 +52,11 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
               </picture>
             }
           />
+        </div>
+        
+        {/* Logo carousel */}
+        <div className="w-full max-w-6xl mx-auto px-8 mt-4">
+          <LogoCarousel />
         </div>
       </div>
     </motion.section>
@@ -124,12 +130,15 @@ const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
   );
 };
 
-const HeroScrollAnimation = forwardRef<HTMLElement>((props, ref) => {
+const HeroScrollAnimation = forwardRef<HTMLDivElement, {}>((props, ref) => {
   const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ['start start', 'end end'],
   });
+
+  // Forward ref to the main element
+  useImperativeHandle(ref, () => container.current as HTMLDivElement);
 
   return (
     <>
