@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { DottedSurface } from "../ui/dotted-surface";
 
 export default function Overview() {
   const [ref, inView] = useInView({
@@ -11,37 +12,49 @@ export default function Overview() {
 
   return (
     <section
-      id="overview"
+      id="about"
       ref={ref}
-      className="py-32 sm:py-40 lg:py-48 relative z-10"
+      className="py-32 sm:py-40 lg:py-48 relative z-10 min-h-screen bg-black pb-[600px]"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <DottedSurface className="absolute inset-0" />
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black mb-8">
-            Overview
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8">
+            About
           </h2>
-          <div className="max-w-4xl space-y-6 text-lg sm:text-xl text-black/70 leading-relaxed">
+          <div className="max-w-4xl space-y-6 text-lg sm:text-xl text-white/70 leading-relaxed">
             <p>
-              The JPMC Design System project was initiated to address the
-              fragmentation of design patterns and components across multiple
-              product teams. With over 50+ products and hundreds of designers
-              and developers, there was a critical need for a unified design
-              language.
+              I love crafting design systems that operate at scale, creating visual interactive experiences, and fostering collaboration. I have been delivering value for global-scale clients for over 12 years.
             </p>
             <p>
-              This case study documents the complete journey from research and
-              discovery through design, development, and implementation of a
-              comprehensive design system that serves as the foundation for all
-              JPMorgan Chase digital products.
+              Fun fact: I built my own Sprinter Campervan during lockdown from my driveway/garage. The entire design-build process and camper trips I used it for were an absolute delight.
             </p>
             <p>
-              The scope included creating a component library, design tokens,
-              documentation, and establishing processes for maintenance and
-              evolution of the system.
+              I recently started to learn to play the drums and also surf, which are both super fun. I love Archery and am a certified Archery GB Level 1 Coach.
+            </p>
+            <p className="pt-4">
+              <em>Contact me</em> →{" "}
+              <a
+                href="https://www.linkedin.com/in/billypaul"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white transition-colors"
+              >
+                Linkedin
+              </a>
+              {" • "}
+              <a
+                href="https://www.designmentor.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white transition-colors"
+              >
+                Design Mentor
+              </a>
             </p>
           </div>
         </motion.div>

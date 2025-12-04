@@ -3,12 +3,10 @@
 import CustomCursor from "./components/ui/CustomCursor";
 import BackgroundMotion from "./components/ui/BackgroundMotion";
 import Navigation from "./components/ui/Navigation";
-import Hero from "./components/sections/Hero";
+import HeroScrollAnimation from "./components/ui/hero-scroll-animation";
 import Overview from "./components/sections/Overview";
 import Impact from "./components/sections/Impact";
 import Solution from "./components/sections/Solution";
-import Problem from "./components/sections/Problem";
-import Learnings from "./components/sections/Learnings";
 
 export default function Home() {
   return (
@@ -16,12 +14,10 @@ export default function Home() {
       <CustomCursor />
       <BackgroundMotion />
       <Navigation />
-      <Hero />
+      <HeroScrollAnimation />
       <Overview />
       <Impact />
       <Solution />
-      <Problem />
-      <Learnings />
       </main>
   );
 }
