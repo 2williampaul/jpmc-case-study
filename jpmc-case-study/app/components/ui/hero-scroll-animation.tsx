@@ -18,13 +18,14 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   return (
     <motion.section
       style={{ scale, rotate }}
-      className='sticky font-semibold top-0 h-screen bg-white flex flex-col items-center justify-center text-black'
+      className='sticky font-semibold top-0 h-screen bg-gradient-to-t to-[#f0f0f0] from-[#f5f5f5] flex flex-col items-center justify-center text-black'
     >
       <WarpedGridBackground />
 
       <div className='flex flex-col items-center justify-center space-y-8 px-8'>
         {/* Circular photo - 2x larger */}
-        <div className='relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[448px] lg:h-[448px] rounded-full overflow-hidden'>
+        {/* TODO: Add profile image */}
+        {/* <div className='relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[448px] lg:h-[448px] rounded-full overflow-hidden'>
           <Image
             src="/Billy-Paul-Designer.webp"
             alt="Billy Paul"
@@ -33,12 +34,12 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
             priority
             unoptimized
           />
-        </div>
+        </div> */}
         
         {/* Headline with blurred stagger effect */}
         <div className="max-w-4xl mx-auto px-4 text-center">
           <BlurredStagger 
-            text="Billy Paul is a Design System Designer|with a blend of strategy, craft and vibes" 
+            text="Billy Paul is a Design System Designer with a blend of strategy, experience and vibes" 
             emoji={
               <picture>
                 <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/26a1/512.webp" type="image/webp" />
@@ -130,7 +131,7 @@ const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
   );
 };
 
-const HeroScrollAnimation = forwardRef<HTMLDivElement, {}>((props, ref) => {
+const HeroScrollAnimation = forwardRef<HTMLElement, {}>((props, ref) => {
   const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -138,7 +139,7 @@ const HeroScrollAnimation = forwardRef<HTMLDivElement, {}>((props, ref) => {
   });
 
   // Forward ref to the main element
-  useImperativeHandle(ref, () => container.current as HTMLDivElement);
+  useImperativeHandle(ref, () => container.current as HTMLElement);
 
   return (
     <>

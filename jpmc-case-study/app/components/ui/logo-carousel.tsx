@@ -31,7 +31,7 @@ export function LogoCarousel() {
 
     let scrollPosition = 0;
     const scrollSpeed = 0.3; // Slow panning speed (pixels per frame)
-    let animationId: number | undefined;
+    let animationId: number;
     
     const animate = () => {
       scrollPosition += scrollSpeed;
@@ -39,8 +39,7 @@ export function LogoCarousel() {
       // Calculate width of one set of logos (14 logos)
       // Each logo is approximately 100px + 48px gap (on md screens) = ~148px per logo
       // On smaller screens: 100px + 32px gap = ~132px per logo
-      // Check if window is available (client-side only)
-      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      const isMobile = window.innerWidth < 768;
       const logoWidth = isMobile ? 132 : 148;
       const singleSetWidth = LOGOS.length * logoWidth;
       
@@ -60,7 +59,7 @@ export function LogoCarousel() {
     
     return () => {
       clearTimeout(timeoutId);
-      if (animationId !== undefined) {
+      if (animationId) {
         cancelAnimationFrame(animationId);
       }
     };
@@ -69,13 +68,13 @@ export function LogoCarousel() {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full h-16 overflow-hidden mt-6"
+      className="relative w-full h-12 overflow-hidden mt-6"
     >
       {/* Left fade gradient - matches hero background */}
-      <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#f0f0f0] via-[#f0f0f0]/80 to-transparent z-10 pointer-events-none" />
       
       {/* Right fade gradient - matches hero background */}
-      <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#f0f0f0] via-[#f0f0f0]/80 to-transparent z-10 pointer-events-none" />
       
       {/* Scrolling logos container */}
       <div 
@@ -87,9 +86,9 @@ export function LogoCarousel() {
         {[...LOGOS, ...LOGOS, ...LOGOS].map((logo, index) => (
           <motion.div
             key={`${logo.alt}-${index}`}
-            className="flex-shrink-0 h-14 md:h-16 flex items-center justify-center"
+            className="flex-shrink-0 h-10 md:h-12 flex items-center justify-center"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.5 }}
             transition={{ duration: 0.6, delay: (index % LOGOS.length) * 0.05 }}
           >
             <Image
@@ -97,7 +96,7 @@ export function LogoCarousel() {
               alt={logo.alt}
               width={100}
               height={40}
-              className="object-contain h-full w-auto max-w-[100px] md:max-w-[120px] opacity-100"
+              className="object-contain h-full w-auto max-w-[100px] md:max-w-[120px] opacity-50 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500"
               unoptimized
             />
           </motion.div>
