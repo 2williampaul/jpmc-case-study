@@ -5,21 +5,21 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const LOGOS = [
-  { src: '/brands/Morgan+Stanley.png', alt: 'Morgan Stanley' },
+  { src: '/brands/talabat.png', alt: 'Talabat' },
   { src: '/brands/JPM.png', alt: 'JP Morgan' },
   { src: "/brands/Mcdonald's.png", alt: 'McDonalds' },
   { src: '/brands/HSBC.png', alt: 'HSBC' },
   { src: '/brands/BlackRock.png', alt: 'BlackRock' },
   { src: '/brands/Tesco.png', alt: 'Tesco' },
-  { src: '/brands/talabat.png', alt: 'Talabat' },
-  { src: '/brands/Huge+inc.png', alt: 'Huge Inc' },
-  { src: '/brands/emirates.png', alt: 'Emirates' },
-  { src: '/brands/Ticketmaster.png', alt: 'Ticketmaster' },
-  { src: '/brands/Digitas.png', alt: 'Digitas' },
-  { src: '/brands/skynews-arabia.png', alt: 'Sky News Arabia' },
-  { src: '/brands/UsTwo.png', alt: 'UsTwo' },
-  { src: '/brands/the+economist.png', alt: 'The Economist' },
   { src: '/brands/Sainsburys-logo.png', alt: 'Sainsburys' },
+  { src: '/brands/Huge+inc.png', alt: 'Huge Inc' },
+  { src: '/brands/Digitas.png', alt: 'Digitas' },
+  { src: '/brands/UsTwo.png', alt: 'UsTwo' },
+  { src: '/brands/emirates.png', alt: 'Emirates' },
+  { src: '/brands/Morgan+Stanley.png', alt: 'Morgan Stanley' },
+  { src: '/brands/Ticketmaster.png', alt: 'Ticketmaster' },
+  { src: '/brands/the+economist.png', alt: 'The Economist' },
+  { src: '/brands/skynews-arabia.png', alt: 'Sky News Arabia' },
 ];
 
 export function LogoCarousel() {
@@ -53,10 +53,10 @@ export function LogoCarousel() {
       animationId = requestAnimationFrame(animate);
     };
     
-    // Start animation after 6 second delay from page load
+    // Start animation after 2 second delay from page load
     const timeoutId = setTimeout(() => {
       animate();
-    }, 6000);
+    }, 2000);
     
     return () => {
       clearTimeout(timeoutId);
@@ -70,12 +70,17 @@ export function LogoCarousel() {
     <div 
       ref={containerRef}
       className="relative w-full h-12 overflow-hidden mt-6"
-      style={{ backgroundColor: '#ffffff' }}
     >
+      {/* Left fade gradient - matches hero background */}
+      <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#f0f0f0] via-[#f0f0f0]/80 to-transparent z-10 pointer-events-none" />
+      
+      {/* Right fade gradient - matches hero background */}
+      <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#f0f0f0] via-[#f0f0f0]/80 to-transparent z-10 pointer-events-none" />
+      
       {/* Scrolling logos container */}
       <div 
         ref={scrollRef}
-        className="flex items-center gap-[25.6px] md:gap-[38.4px] h-full"
+        className="flex items-center gap-8 md:gap-12 h-full"
         style={{ willChange: 'transform' }}
       >
         {/* Render logos 3 times for seamless infinite scroll */}
@@ -84,7 +89,7 @@ export function LogoCarousel() {
             key={`${logo.alt}-${index}`}
             className="flex-shrink-0 h-10 md:h-12 flex items-center justify-center"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.5 }}
             transition={{ duration: 0.6, delay: (index % LOGOS.length) * 0.05 }}
           >
             <Image
@@ -92,7 +97,7 @@ export function LogoCarousel() {
               alt={logo.alt}
               width={100}
               height={40}
-              className="object-contain h-full w-auto max-w-[100px] md:max-w-[120px] opacity-100"
+              className="object-contain h-full w-auto max-w-[100px] md:max-w-[120px] opacity-50 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500"
               unoptimized
             />
           </motion.div>
