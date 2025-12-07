@@ -32,7 +32,7 @@ export function LogoCarousel() {
 
     let scrollPosition = 0;
     const scrollSpeed = 0.3; // Slow panning speed (pixels per frame)
-    let animationId: number;
+    let animationId: number | undefined;
     
     const animate = () => {
       scrollPosition += scrollSpeed;
@@ -60,7 +60,7 @@ export function LogoCarousel() {
     
     return () => {
       clearTimeout(timeoutId);
-      if (animationId) {
+      if (animationId !== undefined) {
         cancelAnimationFrame(animationId);
       }
     };
