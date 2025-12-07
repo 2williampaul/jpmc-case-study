@@ -1,7 +1,7 @@
 'use client';
 
-import { useScroll, useTransform, motion, MotionValue, useMotionValue, useSpring } from 'framer-motion';
-import React, { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { useScroll, useTransform, motion, MotionValue } from 'framer-motion';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HoverSlider, HoverSliderImage, HoverSliderImageWrap, TextStaggerHover } from './animated-slideshow';
@@ -13,74 +13,14 @@ interface SectionProps {
   scrollYProgress: MotionValue<number>;
 }
 
-const CursorGradientGlow: React.FC<{ mouseX: MotionValue<number>; mouseY: MotionValue<number> }> = ({ mouseX, mouseY }) => {
-  const [gradient, setGradient] = React.useState('radial-gradient(circle 400px at 50% 50%, rgba(0, 0, 0, 0.03) 0%, transparent 70%)');
-
-  React.useEffect(() => {
-    const unsubscribeX = mouseX.on('change', (x) => {
-      const y = mouseY.get();
-      setGradient(`radial-gradient(circle 400px at ${x}px ${y}px, rgba(0, 0, 0, 0.03) 0%, transparent 70%)`);
-    });
-    
-    const unsubscribeY = mouseY.on('change', (y) => {
-      const x = mouseX.get();
-      setGradient(`radial-gradient(circle 400px at ${x}px ${y}px, rgba(0, 0, 0, 0.03) 0%, transparent 70%)`);
-    });
-
-    return () => {
-      unsubscribeX();
-      unsubscribeY();
-    };
-  }, [mouseX, mouseY]);
-
-  return (
-    <div
-      className="absolute inset-0 pointer-events-none z-0"
-      style={{ background: gradient }}
-    />
-  );
-};
-
 const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
-  const sectionRef = useRef<HTMLElement>(null);
-  
-  // Mouse tracking for gradient glow
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        mouseX.set(x);
-        mouseY.set(y);
-      }
-    };
-
-    const section = sectionRef.current;
-    if (section) {
-      section.addEventListener('mousemove', handleMouseMove);
-      return () => {
-        section.removeEventListener('mousemove', handleMouseMove);
-      };
-    }
-  }, [mouseX, mouseY]);
-
   return (
     <motion.section
-      ref={sectionRef}
-      style={{ scale, rotate }}
-      className='sticky font-semibold top-0 h-screen bg-white flex flex-col items-center justify-center text-black relative overflow-hidden'
+      style={{ scale, rotate, backgroundColor: '#ffffff' }}
+      className='sticky font-semibold top-0 h-screen flex flex-col items-center justify-center text-black'
     >
-      {/* Cursor gradient glow effect - behind content */}
-      <CursorGradientGlow mouseX={smoothX} mouseY={smoothY} />
-      
       <WarpedGridBackground />
 
       <div className='flex flex-col items-center justify-center space-y-8 px-8 relative z-10'>
@@ -116,7 +56,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
         </div>
         
         {/* Logo carousel */}
-        <div className="w-full max-w-6xl mx-auto px-8 mt-4">
+        <div className="w-full max-w-6xl mx-auto px-8 mt-4" style={{ backgroundColor: '#ffffff' }}>
           <LogoCarousel />
         </div>
       </div>

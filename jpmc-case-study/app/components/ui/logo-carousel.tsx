@@ -70,6 +70,7 @@ export function LogoCarousel() {
     <div 
       ref={containerRef}
       className="relative w-full h-12 overflow-hidden mt-6"
+      style={{ backgroundColor: '#ffffff' }}
     >
       {/* Scrolling logos container */}
       <div 
