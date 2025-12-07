@@ -11,8 +11,8 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "JPMC Design System - Case Study",
-  description: "A comprehensive case study of the JPMC Design System project",
+  title: "Billy Paul",
+  description: "Billy Paul is a designer passionate about designing with craft and skillfulness. He loves crafting design systems which operate at scale, visual interactive experiences and fostering collaboration. He has been delivering value for global-scale clients for over 12 years.",
 };
 
 export default function RootLayout({

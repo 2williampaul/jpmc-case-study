@@ -122,8 +122,8 @@ export default function CustomCursor() {
     >
       {cursorState === "default" && (
         <motion.div
-          className="w-3 h-3 rounded-full bg-white"
-          style={{ width: "12px", height: "12px" }}
+          className="rounded-full bg-white"
+          style={{ width: "6px", height: "6px" }}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -131,21 +131,28 @@ export default function CustomCursor() {
       )}
       {cursorState === "link" && (
         <motion.div
-          className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center"
+          className="flex items-center justify-center"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
         >
           <motion.div
-            className="w-2 h-2 rounded-full bg-white"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ repeat: Infinity, duration: 2 }}
+            className="rounded-full border-2 border-white absolute"
+            style={{ width: "40px", height: "40px" }}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          />
+          <motion.div
+            className="rounded-full bg-white"
+            style={{ width: "6px", height: "6px" }}
           />
         </motion.div>
       )}
       {cursorState === "image" && (
         <motion.div
-          className="w-2 h-2 rounded-full bg-white"
+          className="rounded-full bg-white"
+          style={{ width: "6px", height: "6px" }}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
