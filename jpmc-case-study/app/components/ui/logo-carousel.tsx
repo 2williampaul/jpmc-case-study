@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const LOGOS = [
+  { src: '/brands/talabat.png', alt: 'Talabat' },
   { src: '/brands/JPM.png', alt: 'JP Morgan' },
   { src: "/brands/Mcdonald's.png", alt: 'McDonalds' },
   { src: '/brands/HSBC.png', alt: 'HSBC' },
@@ -36,7 +37,7 @@ export function LogoCarousel() {
     const animate = () => {
       scrollPosition += scrollSpeed;
       
-      // Calculate width of one set of logos (14 logos)
+      // Calculate width of one set of logos (15 logos)
       // Each logo is approximately 100px + 48px gap (on md screens) = ~148px per logo
       // On smaller screens: 100px + 32px gap = ~132px per logo
       const isMobile = window.innerWidth < 768;
@@ -52,10 +53,10 @@ export function LogoCarousel() {
       animationId = requestAnimationFrame(animate);
     };
     
-    // Start animation after a brief delay to ensure DOM is ready
+    // Start animation after 2 second delay from page load
     const timeoutId = setTimeout(() => {
       animate();
-    }, 100);
+    }, 2000);
     
     return () => {
       clearTimeout(timeoutId);
