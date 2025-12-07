@@ -24,8 +24,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
 
       <div className='flex flex-col items-center justify-center space-y-8 px-8'>
         {/* Circular photo - 2x larger */}
-        {/* TODO: Add profile image */}
-        {/* <div className='relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[448px] lg:h-[448px] rounded-full overflow-hidden'>
+        <div className='relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[448px] lg:h-[448px] rounded-full overflow-hidden'>
           <Image
             src="/Billy-Paul-Designer.webp"
             alt="Billy Paul"
@@ -34,7 +33,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
             priority
             unoptimized
           />
-        </div> */}
+        </div>
         
         {/* Headline with blurred stagger effect */}
         <div className="max-w-4xl mx-auto px-4 text-center">
