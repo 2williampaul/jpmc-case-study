@@ -36,6 +36,12 @@ function BentoImageItem({ image, index }: { image: BentoImage; index: number }) 
   });
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  // Hide broken images
+  if (hasError) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -58,10 +64,14 @@ function BentoImageItem({ image, index }: { image: BentoImage; index: number }) 
         }`}
         loading="lazy"
         onLoad={() => setIsLoaded(true)}
+        onError={() => {
+          console.warn(`Failed to load image: ${image.src}`);
+          setHasError(true);
+        }}
         unoptimized
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
       />
-      {!isLoaded && (
+      {!isLoaded && !hasError && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse" />
       )}
     </motion.div>
