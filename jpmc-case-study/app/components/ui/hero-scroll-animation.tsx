@@ -78,39 +78,39 @@ const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
     },
     {
       id: "slide-2",
-      title: "McDonlads",
+      title: "McDonald's",
       href: "/mcdonalds",
-      imageUrl: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&auto=format&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1200&auto=format&fit=crop",
     },
     {
       id: "slide-3",
       title: "HSBC",
       href: "/hsbc",
-      imageUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&auto=format&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1200&auto=format&fit=crop",
     },
     {
       id: "slide-4",
       title: "BlackRock",
       href: "/blackrock",
-      imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&auto=format&fit=crop",
     },
     {
       id: "slide-5",
       title: "Ticketmaster",
       href: "/ticketmaster",
-      imageUrl: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&auto=format&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1200&auto=format&fit=crop",
     },
     {
       id: "slide-6",
       title: "Tesco",
       href: "/tesco",
-      imageUrl: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&auto=format&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=1200&auto=format&fit=crop",
     },
     {
       id: "slide-7",
       title: "More",
       href: "/more",
-      imageUrl: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&auto=format&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&auto=format&fit=crop",
     },
   ];
 
@@ -120,20 +120,20 @@ const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
       className='relative h-screen bg-gradient-to-t to-[#1a1919] from-[#06060e] text-white '
     >
       <div className='absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]'></div>
-      <article className='container mx-auto relative z-10 px-6 h-full flex flex-col justify-center'>
-        <div className='flex items-center justify-evenly gap-6 md:gap-12 scale-100 xl:scale-[0.85] 2xl:scale-100 origin-center transition-transform duration-300'>
-          <div className='flex flex-col space-y-2 md:space-y-4 flex-shrink-0'>
+      <article className='container mx-auto relative z-10 px-4 sm:px-6 h-full flex flex-col justify-center'>
+        <div className='flex flex-col md:flex-row items-center justify-center md:justify-evenly gap-6 md:gap-12 scale-100 xl:scale-[0.85] 2xl:scale-100 origin-center transition-transform duration-300'>
+          <div className='flex flex-col space-y-1 sm:space-y-2 md:space-y-4 flex-shrink-0'>
             {SLIDES.map((slide, index) => (
               <Link key={slide.id} href={slide.href}>
                 <TextStaggerHover
                   index={index}
-                  className="cursor-pointer text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tighter whitespace-nowrap"
+                  className="cursor-pointer text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tighter whitespace-nowrap"
                   text={slide.title}
                 />
               </Link>
             ))}
           </div>
-          <HoverSliderImageWrap className="w-full max-w-2xl h-[400px] sm:h-[500px] md:h-[600px] flex-shrink-0">
+          <HoverSliderImageWrap className="hidden md:block w-full max-w-2xl h-[400px] lg:h-[500px] xl:h-[600px] flex-shrink-0">
             {SLIDES.map((slide, index) => (
               <HoverSliderImage
                 key={slide.id}

@@ -7,7 +7,6 @@ import Logo from "./Logo";
 const navItems = [
   { name: "Work", href: "#work" },
   { name: "About", href: "#about" },
-  { name: "Impact", href: "#impact" },
   { name: "Snaps", href: "#snaps" },
 ];
 
@@ -56,7 +55,7 @@ export default function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="flex items-center justify-between h-20">
           <motion.a
             href="#work"
@@ -67,7 +66,7 @@ export default function Navigation() {
             <Logo />
           </motion.a>
 
-          <ul className="hidden md:flex items-center gap-6 lg:gap-8">
+          <ul className="flex items-center gap-4 sm:gap-6 lg:gap-8">
             {navItems.map((item) => {
               const sectionId = item.href.substring(1);
               const isActive = activeSection === sectionId;

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { TestimonialsCarousel } from "../ui/testimonials-carousel";
 import { DottedSurface } from "../ui/dotted-surface";
 
 export default function Overview() {
@@ -14,10 +15,10 @@ export default function Overview() {
     <section
       id="about"
       ref={ref}
-      className="py-32 sm:py-40 lg:py-48 relative z-10 min-h-screen bg-black pb-[600px]"
+      className="relative z-10 bg-black overflow-hidden"
     >
-      <DottedSurface className="absolute inset-0" />
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-20 pt-[80px] sm:pt-[100px] md:pt-[150px]">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -26,7 +27,7 @@ export default function Overview() {
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8">
             About
           </h2>
-          <div className="max-w-4xl space-y-6 text-lg sm:text-xl text-white/70 leading-relaxed">
+          <div className="max-w-3xl space-y-6 text-lg sm:text-xl text-white/70 leading-relaxed">
             <p>
               I love crafting design systems that operate at scale, creating visual interactive experiences, and fostering collaboration. I have been delivering value for global-scale clients for over 12 years.
             </p>
@@ -57,7 +58,22 @@ export default function Overview() {
               </a>
             </p>
           </div>
+          
+          {/* Testimonials */}
+          <motion.div
+            className="mt-12 sm:mt-16 md:mt-20"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <TestimonialsCarousel align="left" />
+          </motion.div>
         </motion.div>
+      </div>
+      
+      {/* Dotted surface background - appears below content */}
+      <div className="relative h-[300px]">
+        <DottedSurface />
       </div>
     </section>
   );
