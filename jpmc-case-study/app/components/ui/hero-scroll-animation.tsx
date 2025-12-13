@@ -16,6 +16,7 @@ interface SectionProps {
 const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
+
   return (
     <motion.section
       style={{ scale, rotate, backgroundColor: '#ffffff' }}
@@ -24,7 +25,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
       <WarpedGridBackground />
 
       <div className='flex flex-col items-center justify-center space-y-8 px-8 relative z-10'>
-        {/* Circular photo - 2x larger */}
+        {/* Circular photo */}
         <div className='relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[448px] lg:h-[448px] rounded-full overflow-hidden'>
           <Image
             src="/Billy-Paul-Designer.webp"
@@ -89,7 +90,7 @@ const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
     },
     {
       id: "slide-4",
-      title: "BackRock",
+      title: "BlackRock",
       href: "/blackrock",
       imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop",
     },
