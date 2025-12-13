@@ -173,6 +173,7 @@ export const HoverSliderImage = React.forwardRef<
   HTMLMotionProps<"div"> & HoverSliderImageProps
 >(({ index, imageUrl, logoText, children, className, ...props }, ref) => {
   const { activeSlide } = useHoverSliderContext()
+  const [imageError, setImageError] = React.useState(false)
 
   return (
     <motion.div
@@ -181,16 +182,21 @@ export const HoverSliderImage = React.forwardRef<
       transition={{ ease: [0.33, 1, 0.68, 1], duration: 0.8 }}
       variants={clipPathVariants}
       animate={activeSlide === index ? "visible" : "hidden"}
-      {...props}
     >
-      <Image
-        src={imageUrl}
-        alt={logoText}
-        fill
-        className="object-cover"
-        unoptimized
-        {...(props as any)}
-      />
+      {!imageError ? (
+        <Image
+          src={imageUrl}
+          alt={logoText}
+          fill
+          className="object-cover"
+          unoptimized
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+          <span className="text-white/50 text-lg">{logoText}</span>
+        </div>
+      )}
       {/* Logo overlay - centered bottom, 40px from bottom, 40px high, white bg, 20px padding */}
       <div className="absolute bottom-[40px] left-1/2 -translate-x-1/2 bg-white flex items-center justify-center min-h-[40px] p-5">
         <span className="text-black text-xs sm:text-sm font-semibold whitespace-nowrap">{logoText}</span>

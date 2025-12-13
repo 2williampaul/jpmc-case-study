@@ -40,9 +40,9 @@ export default function Solution() {
     <section
       id="snaps"
       ref={ref}
-      className="py-32 sm:py-40 lg:py-48 relative z-10 bg-white"
+      className="py-16 sm:py-24 md:py-32 lg:py-48 relative z-10 bg-white"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

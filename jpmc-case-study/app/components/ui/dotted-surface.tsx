@@ -1,5 +1,4 @@
 'use client';
-
 import { cn } from '@/lib/utils';
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
@@ -15,67 +14,54 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 		particles: THREE.Points[];
 		animationId: number;
 		count: number;
-		scrollOffset: number;
 	} | null>(null);
 
 	useEffect(() => {
 		if (!containerRef.current) return;
 
-		const SEPARATION = 150;
-		const AMOUNTX = 40;
-		const AMOUNTY = 60;
-		const PARALLAX_RATE = 0.3; // Parallax scroll rate (slower than normal)
-		const BOUNCE_AMPLITUDE = 20; // Reduced from 50
-		const ANIMATION_SPEED = 0.03; // Reduced from 0.1
+		const container = containerRef.current;
+		const rect = container.getBoundingClientRect();
+		const width = rect.width || window.innerWidth;
+		const height = rect.height || 300;
+
+		const SEPARATION = 80;
+		const AMOUNTX = 60;
+		const AMOUNTY = 20;
 
 		// Scene setup
 		const scene = new THREE.Scene();
-		scene.fog = new THREE.Fog(0x000000, 2000, 10000);
 
 		const camera = new THREE.PerspectiveCamera(
-			60,
-			window.innerWidth / window.innerHeight,
+			50,
+			width / height,
 			1,
 			10000,
 		);
-		// Adjust camera position to account for 500px spacing below text
-		camera.position.set(0, 355, 1220);
+		camera.position.set(0, 300, 1000);
+		camera.lookAt(0, 0, 0);
 
 		const renderer = new THREE.WebGLRenderer({
 			alpha: true,
 			antialias: true,
 		});
-		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+		renderer.setSize(width, height);
 		renderer.setClearColor(0x000000, 0);
 
-		containerRef.current.appendChild(renderer.domElement);
+		container.appendChild(renderer.domElement);
 
 		// Create particles
-		const particles: THREE.Points[] = [];
 		const positions: number[] = [];
-		const colors: number[] = [];
 
 		// Create geometry for all particles
 		const geometry = new THREE.BufferGeometry();
-		
-		// Light red color (RGB: 255, 180, 180)
-		const lightRedR = 255;
-		const lightRedG = 180;
-		const lightRedB = 180;
-
-		// Initial Y offset to position particles 500px below text
-		const initialYOffset = -500;
 
 		for (let ix = 0; ix < AMOUNTX; ix++) {
 			for (let iy = 0; iy < AMOUNTY; iy++) {
 				const x = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
-				const y = initialYOffset; // Start 500px below
+				const y = 0;
 				const z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
-
 				positions.push(x, y, z);
-				// Use light red color for all particles
-				colors.push(lightRedR, lightRedG, lightRedB);
 			}
 		}
 
@@ -83,14 +69,13 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 			'position',
 			new THREE.Float32BufferAttribute(positions, 3),
 		);
-		geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
-		// Create material
+		// Create material - white/light gray dots
 		const material = new THREE.PointsMaterial({
-			size: 8,
-			vertexColors: true,
+			size: 4,
+			color: 0xcccccc,
 			transparent: true,
-			opacity: 0.8,
+			opacity: 0.9,
 			sizeAttenuation: true,
 		});
 
@@ -99,69 +84,48 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 		scene.add(points);
 
 		let count = 0;
-		let animationId: number = 0;
-		let scrollOffset = 0;
-
-		// Handle scroll for parallax effect
-		const handleScroll = () => {
-			if (containerRef.current) {
-				const rect = containerRef.current.getBoundingClientRect();
-				const sectionTop = rect.top;
-				const windowHeight = window.innerHeight;
-				
-				// Calculate how much the section has scrolled
-				// When section is at top of viewport, offset is 0
-				// As section scrolls up, offset increases (parallax moves slower)
-				const scrollDistance = windowHeight - sectionTop;
-				
-				// Apply parallax rate (slower than normal scroll)
-				scrollOffset = scrollDistance * PARALLAX_RATE;
-			}
-		};
+		let animationId = 0;
 
 		// Animation function
 		const animate = () => {
 			animationId = requestAnimationFrame(animate);
 
 			const positionAttribute = geometry.attributes.position;
-			const positions = positionAttribute.array as Float32Array;
-			let i = 0;
+			const posArray = positionAttribute.array as Float32Array;
 
+			let i = 0;
 			for (let ix = 0; ix < AMOUNTX; ix++) {
 				for (let iy = 0; iy < AMOUNTY; iy++) {
 					const index = i * 3;
-					// Animate Y position with sine waves (reduced amplitude)
-					positions[index + 1] =
-						initialYOffset +
-						scrollOffset +
-						Math.sin((ix + count) * 0.3) * BOUNCE_AMPLITUDE +
-						Math.sin((iy + count) * 0.5) * BOUNCE_AMPLITUDE;
+					// Animate Y position with sine waves
+					posArray[index + 1] =
+						Math.sin((ix + count) * 0.3) * 25 +
+						Math.sin((iy + count) * 0.5) * 25;
 					i++;
 				}
 			}
 
 			positionAttribute.needsUpdate = true;
 			renderer.render(scene, camera);
-			count += ANIMATION_SPEED; // Reduced speed
+			count += 0.05;
 		};
 
-		// Handle window resize
+		// Handle resize
 		const handleResize = () => {
-			camera.aspect = window.innerWidth / window.innerHeight;
+			const newRect = container.getBoundingClientRect();
+			const newWidth = newRect.width || window.innerWidth;
+			const newHeight = newRect.height || 300;
+			camera.aspect = newWidth / newHeight;
 			camera.updateProjectionMatrix();
-			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.setSize(newWidth, newHeight);
 		};
 
 		window.addEventListener('resize', handleResize);
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		
-		// Initial scroll calculation
-		handleScroll();
 
-		// Start animation (this assigns animationId)
+		// Start animation
 		animate();
 
-		// Store references (animationId is now assigned from animate())
+		// Store references
 		sceneRef.current = {
 			scene,
 			camera,
@@ -169,21 +133,19 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 			particles: [points],
 			animationId,
 			count,
-			scrollOffset,
 		};
 
 		// Cleanup function
 		return () => {
 			window.removeEventListener('resize', handleResize);
-			window.removeEventListener('scroll', handleScroll);
+
 			if (sceneRef.current) {
 				cancelAnimationFrame(sceneRef.current.animationId);
-				// Clean up Three.js objects
 				sceneRef.current.scene.traverse((object) => {
 					if (object instanceof THREE.Points) {
 						object.geometry.dispose();
 						if (Array.isArray(object.material)) {
-							object.material.forEach((material) => material.dispose());
+							object.material.forEach((mat) => mat.dispose());
 						} else {
 							object.material.dispose();
 						}
@@ -191,9 +153,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 				});
 				sceneRef.current.renderer.dispose();
 				if (containerRef.current && sceneRef.current.renderer.domElement) {
-					containerRef.current.removeChild(
-						sceneRef.current.renderer.domElement,
-					);
+					containerRef.current.removeChild(sceneRef.current.renderer.domElement);
 				}
 			}
 		};
@@ -202,9 +162,8 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn('pointer-events-none absolute inset-0 -z-10', className)}
+			className={cn('pointer-events-none absolute inset-0', className)}
 			{...props}
 		/>
 	);
 }
-

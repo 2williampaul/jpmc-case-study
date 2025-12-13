@@ -5,7 +5,6 @@ import BackgroundMotion from "./components/ui/BackgroundMotion";
 import Navigation from "./components/ui/Navigation";
 import HeroScrollAnimation from "./components/ui/hero-scroll-animation";
 import Overview from "./components/sections/Overview";
-import Impact from "./components/sections/Impact";
 import Solution from "./components/sections/Solution";
 
 export default function Home() {
@@ -16,8 +15,7 @@ export default function Home() {
       <Navigation />
       <HeroScrollAnimation />
       <Overview />
-      <Impact />
       <Solution />
-      </main>
+    </main>
   );
 }
