@@ -40,7 +40,7 @@ export default function Overview() {
             <p className="pt-4">
               <em>Contact me</em> →{" "}
               <a
-                href="https://www.linkedin.com/in/williampauldesigner/"
+                href="https://www.linkedin.com/in/billypaul"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-white transition-colors"
@@ -49,7 +49,7 @@ export default function Overview() {
               </a>
               {" • "}
               <a
-                href="https://www.designed.org/mentors/williampaul"
+                href="https://www.designmentor.io"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-white transition-colors"

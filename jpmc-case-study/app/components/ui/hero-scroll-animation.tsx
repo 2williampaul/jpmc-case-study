@@ -178,4 +178,3 @@ const HeroScrollAnimation = forwardRef<HTMLElement, {}>((props, ref) => {
 HeroScrollAnimation.displayName = 'HeroScrollAnimation';
 
 export default HeroScrollAnimation;
-
